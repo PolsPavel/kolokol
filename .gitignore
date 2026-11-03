@@ -1,0 +1,25 @@
+# Зависимости
+.next
+node_modules
+.pnp.*
+.yarn/*
+.yarnrc.yml
+.npmrc
+
+# Конфиденциальные данные
+.env
+*.txt
+запуск.txt # ВАЖНО: добавьте сюда свой проблемный файл!
+*.log
+
+# Кэш TypeScript
+tsconfig.tsbuildinfo
+
+# Тестирование
+coverage/
+
+# IDE
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
