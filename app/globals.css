@@ -1,0 +1,48 @@
+﻿/* app/globals.css */
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-playfair);
+}
+
+@layer base {
+  :root {
+    --font-sans: var(--font-inter);
+    --font-heading: var(--font-playfair);
+  }
+
+  /* Применяем Playfair ко всем заголовкам напрямую через CSS */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading), serif;
+    letter-spacing: -0.025em; /* Это аналог tracking-tight */
+  }
+
+  /* Улучшаем базовый текст */
+  body {
+    font-family: var(--font-sans), sans-serif;
+    font-size: 15px; /* Аналог text-[15px] */
+    line-height: 1.625; /* Аналог leading-relaxed */
+  }
+
+  /* Делаем инпуты более строгими */
+  input, textarea, select {
+    font-size: 0.875rem; /* Аналог text-sm */
+  }
+}
+
+/* Кастомный скроллбар для строгости */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -1,0 +1,74 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# next.js
+/.next/
+/out/
+next-env.d.ts
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env*.local
+.env.production
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+
+# prisma / sqlite
+/prisma/dev.db
+/prisma/dev.db-journal
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+# prisma generated client (если генерируется в проект)
+/generated/prisma
+
+# IDE
+/.idea
+/.vscode/*
+!/.vscode/extensions.json
+
+# os
+.DS_Store
+запуск.txt # ВАЖНО: добавьте сюда свой проблемный файл!
+
+# dump & local configs
+project_dump.txt
+.npmrc
+
+# database backups
+dev.db.backup*
+*.db.backup*
+*.db.backup-*
+
+# AI assistants local configs
+.agents/
+.claude/
+.cursor/
+.devin/
+AGENTS.md
+
+# local dump
+project_dump.txt
+.npmrc

@@ -1,0 +1,133 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model User {
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String?
+  phone             String?   @unique
+  phoneVerifiedAt   DateTime?
+  privacyAcceptedAt DateTime?
+  privacyVersion    String?
+  passwordHash      String
+  temporaryPassword String?
+  role              Role      @default(USER)
+  monthlyLimit      Float     @default(0)
+  currentSpent      Float     @default(0)
+
+  accessExpiresAt DateTime?
+  hasLoggedIn     Boolean   @default(false)
+
+  lastLoginAt  DateTime?
+  lastLogoutAt DateTime?
+
+  isDeleted Boolean @default(false)
+
+  emailVerified     DateTime?
+  verificationToken String?   @unique
+
+  offerAcceptedAt DateTime?
+  offerVersion    String?
+  offerAcceptedIp String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions     Transaction[]
+  emailBroadcasts  EmailBroadcast[]
+  smsVerifications SmsVerification[]
+  payments         Payment[]
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  amount      Float
+  type        String
+  description String
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id])
+}
+
+model EmailBroadcast {
+  id           String   @id @default(cuid())
+  userId       String
+  subject      String
+  totalCount   Int
+  sentCount    Int
+  failedCount  Int
+  skippedCount Int
+  details      String?
+  createdAt    DateTime @default(now())
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model Unsubscribe {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String?
+  createdAt DateTime @default(now())
+}
+
+model Email {
+  id      String   @id @default(cuid())
+  address String   @unique
+  status  String   @default("new")
+  source  String?
+  addedAt DateTime @default(now())
+}
+
+model SmsVerification {
+  id         String    @id @default(cuid())
+  userId     String
+  phone      String
+  codeHash   String
+  expiresAt  DateTime
+  attempts   Int       @default(0)
+  sentAt     DateTime  @default(now())
+  verifiedAt DateTime?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, phone, sentAt])
+}
+
+model Payment {
+  id         String   @id @default(cuid())
+  userId     String
+  provider   String   @default("tbank")
+  orderId    String   @unique
+  providerId String?  @unique
+  amount     Int
+  currency   String   @default("RUB")
+  status     String   @default("PENDING")
+  paymentUrl String?
+  creditedAt DateTime?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model ImpersonationToken {
+  id           String   @id @default(cuid())
+  tokenHash    String   @unique
+  targetUserId String
+  adminId      String
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  @@index([expiresAt])
+}
